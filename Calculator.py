@@ -16,53 +16,87 @@ class Calculator:
                                            borderwidth=3, relief="ridge", fg="#222222")
         self.display_label.grid(row=0, column=0, columnspan=4, padx=10, pady=5)
 
-        button1 = tkinter.Button(window, text="1", height=3, width=5, bg="#f9f6e2", fg="#222222")
+        button1 = tkinter.Button(window, text="1", height=3, width=5, activebackground="#e8e5d1",
+                                 bg="#f9f6e2", fg="#222222", command=lambda: self.button_pressed("1"))
         button1.grid(row=4, column=0)
 
-        button2 = tkinter.Button(window, text="2", height=3, width=5, bg="#f9f6e2", fg="#222222")
+        button2 = tkinter.Button(window, text="2", height=3, width=5, activebackground="#e8e5d1",
+                                 bg="#f9f6e2", fg="#222222", command=lambda: self.button_pressed("2"))
         button2.grid(row=4, column=1)
 
-        button3 = tkinter.Button(window, text="3", height=3, width=5, bg="#f9f6e2", fg="#222222")
+        button3 = tkinter.Button(window, text="3", height=3, width=5, activebackground="#e8e5d1",
+                                 bg="#f9f6e2", fg="#222222", command=lambda: self.button_pressed("3"))
         button3.grid(row=4, column=2)
 
-        button4 = tkinter.Button(window, text="4", height=3, width=5, bg="#f9f6e2", fg="#222222")
+        button4 = tkinter.Button(window, text="4", height=3, width=5, activebackground="#e8e5d1",
+                                 bg="#f9f6e2", fg="#222222", command=lambda: self.button_pressed("4"))
         button4.grid(row=3, column=0, pady=5)
 
-        button5 = tkinter.Button(window, text="5", height=3, width=5, bg="#f9f6e2", fg="#222222")
+        button5 = tkinter.Button(window, text="5", height=3, width=5, activebackground="#e8e5d1",
+                                 bg="#f9f6e2", fg="#222222", command=lambda: self.button_pressed("5"))
         button5.grid(row=3, column=1)
 
-        button6 = tkinter.Button(window, text="6", height=3, width=5, bg="#f9f6e2", fg="#222222")
+        button6 = tkinter.Button(window, text="6", height=3, width=5, activebackground="#e8e5d1",
+                                 bg="#f9f6e2", fg="#222222", command=lambda: self.button_pressed("6"))
         button6.grid(row=3, column=2)
 
-        button7 = tkinter.Button(window, text="7", height=3, width=5, bg="#f9f6e2", fg="#222222")
+        button7 = tkinter.Button(window, text="7", height=3, width=5, activebackground="#e8e5d1",
+                                 bg="#f9f6e2", fg="#222222", command=lambda: self.button_pressed("7"))
         button7.grid(row=2, column=0)
 
-        button8 = tkinter.Button(window, text="8", height=3, width=5, bg="#f9f6e2", fg="#222222")
+        button8 = tkinter.Button(window, text="8", height=3, width=5, activebackground="#e8e5d1",
+                                 bg="#f9f6e2", fg="#222222", command=lambda: self.button_pressed("8"))
         button8.grid(row=2, column=1)
 
-        button9 = tkinter.Button(window, text="9", height=3, width=5, bg="#f9f6e2", fg="#222222")
+        button9 = tkinter.Button(window, text="9", height=3, width=5, activebackground="#e8e5d1",
+                                 bg="#f9f6e2", fg="#222222", command=lambda: self.button_pressed("9"))
         button9.grid(row=2, column=2)
 
-        button0 = tkinter.Button(window, text="0", height=3, width=5, bg="#f9f6e2", fg="#222222")
+        button0 = tkinter.Button(window, text="0", height=3, width=5, activebackground="#e8e5d1",
+                                 bg="#f9f6e2", fg="#222222", command=lambda: self.button_pressed("0"))
         button0.grid(row=5, column=1, pady=5)
 
-        divide_button = tkinter.Button(window, text="/", height=3, width=5, bg="#557b95", fg="#eeeeee")
+        divide_button = tkinter.Button(window, text="/", height=3, width=5, activebackground="#446a84",
+                                       activeforeground="#eeeeee", bg="#557b95", fg="#eeeeee",
+                                       command=lambda: self.button_pressed("/"))
         divide_button.grid(row=2, column=3)
 
-        multiply_button = tkinter.Button(window, text="*", height=3, width=5, bg="#557b95", fg="#eeeeee")
+        multiply_button = tkinter.Button(window, text="*", height=3, width=5, activebackground="#446a84",
+                                         activeforeground="#eeeeee", bg="#557b95", fg="#eeeeee",
+                                         command=lambda: self.button_pressed("*"))
         multiply_button.grid(row=3, column=3)
 
-        subtract_button = tkinter.Button(window, text="-", height=3, width=5, bg="#557b95", fg="#eeeeee")
+        subtract_button = tkinter.Button(window, text="-", height=3, width=5, activebackground="#446a84",
+                                         activeforeground="#eeeeee", bg="#557b95", fg="#eeeeee",
+                                         command=lambda: self.button_pressed("-"))
         subtract_button.grid(row=4, column=3)
 
-        add_button = tkinter.Button(window, text="+", height=3, width=5, bg="#557b95", fg="#eeeeee")
+        add_button = tkinter.Button(window, text="+", height=3, width=5, activebackground="#446a84",
+                                    activeforeground="#eeeeee", bg="#557b95", fg="#eeeeee",
+                                    command=lambda: self.button_pressed("+"))
         add_button.grid(row=5, column=3)
 
-        equal_button = tkinter.Button(window, text="=", height=3, width=5, bg="#c1c0b9", fg="#222222")
+        equal_button = tkinter.Button(window, text="=", height=3, width=5, activebackground="#aaaba8",
+                                      bg="#c1c0b9", fg="#222222", command=self.equal_pressed)
         equal_button.grid(row=5, column=2)
 
-        clear_button = tkinter.Button(window, text="AC", height=3, width=5, bg="#c1c0b9", fg="#222222")
+        clear_button = tkinter.Button(window, text="AC", height=3, width=5, activebackground="#aaaba8",
+                                      bg="#c1c0b9", fg="#222222", command=self.clear)
         clear_button.grid(row=5, column=0)
+
+    def button_pressed(self, value):
+
+        self.expression += value
+        # print(self.expression)
+        self.display.set(self.expression)
+
+    def equal_pressed(self):
+        pass
+
+    def clear(self):
+
+        self.expression = ""
+        self.display.set("0")
 
 
 # -- Main Driver Code --
