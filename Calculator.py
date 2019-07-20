@@ -91,7 +91,15 @@ class Calculator:
         self.display.set(self.expression)
 
     def equal_pressed(self):
-        pass
+
+        try:
+            self.display.set(str(int(eval(self.expression))))
+        except SyntaxError:
+            self.display.set("error")
+        except ZeroDivisionError:
+            self.display.set("error")
+        finally:
+            self.expression = ""
 
     def clear(self):
 
