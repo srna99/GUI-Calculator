@@ -4,6 +4,7 @@ import math
 
 class Calculator:
     expression = ""
+    isSolved = False
 
     def __init__(self, window):
 
@@ -109,12 +110,18 @@ class Calculator:
 
     def number_pressed(self, number):
 
-        self.expression += number
+        if not self.isSolved:
+            self.expression += number
+        else:
+            self.expression = number
+            self.isSolved = False
+
         self.display.set(self.expression)
 
     def function_pressed(self, symbol):
 
         if self.expression != "":
+            self.isSolved = False
             if symbol == "+" or symbol == "-" or symbol == "*" or symbol == "/":
                 self.expression += symbol
                 self.display.set(self.expression)
@@ -122,9 +129,13 @@ class Calculator:
                 if symbol == "±":
                     self.expression += "*-1"
                 elif symbol == "x²":
-                    self.expression = str(round(pow(float(self.expression), 2), 5))
+                    try:
+                        self.expression = str(round(pow(float(self.expression), 2), 7))
+                    except OverflowError as e:
+                        self.display.set("error")
+                        self.expression = ""
                 elif symbol == "√":
-                    self.expression = str(round(math.sqrt(abs(float(self.expression))), 5))
+                    self.expression = str(round(math.sqrt(abs(float(self.expression))), 7))
                 elif symbol == "%":
                     self.expression += "/100"
 
@@ -135,10 +146,9 @@ class Calculator:
         try:
             self.display.set(str(eval(self.expression)))
             self.expression = self.display.get()
-        except SyntaxError:
-            self.display.set("error")
-            self.expression = ""
-        except ZeroDivisionError:
+            self.isSolved = True
+        except (SyntaxError, ZeroDivisionError, ValueError, OverflowError) as e:
+            print("ERROR: ", e)
             self.display.set("error")
             self.expression = ""
 
