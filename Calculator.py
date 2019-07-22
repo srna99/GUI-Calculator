@@ -3,8 +3,8 @@ import math
 
 
 class Calculator:
-    expression = ""
-    is_solved = True
+    expression = ""  # equation to be solved
+    is_solved = True  # if current equation is finished with
 
     def __init__(self, window: tkinter.Tk):
 
@@ -12,6 +12,7 @@ class Calculator:
         window.geometry("275x440")
         window.configure(bg="#e7e6e1", padx=5, pady=10)
 
+        # the label display on the screen
         self.display = tkinter.StringVar(window, "0")
 
         display_label = tkinter.Label(window, textvariable=self.display, font=("Arial", 14),
@@ -130,23 +131,28 @@ class Calculator:
 
     def number_pressed(self, number):
 
+        # clear expression and start new one
         if self.is_solved:
+            # formatting numbers starting with decimal
             if number == ".":
                 number = "0."
 
             self.expression = number
             self.display.set(self.expression)
             self.is_solved = False
+        # continue building up the equation
         else:
             if number == ".":
                 if not self.expression[-1].isdigit():
                     number = "0."
                 else:
+                    # getting all numbers by itself in a list
                     number_list = self.expression.replace("+", " ").replace("-", " ").replace("/", " ") \
                         .replace("*", " ").split()
 
                     current_number = number_list[-1]
 
+                    # checking if it is okay to insert decimal and if not, then return
                     is_int = math.floor(float(current_number)) == int(current_number)
 
                     if not is_int:
@@ -159,36 +165,46 @@ class Calculator:
 
         if self.expression != "":
             self.is_solved = False
+
+            # if basic operators, then just add to equation
             if symbol == "+" or symbol == "-" or symbol == "*" or symbol == "/":
                 self.expression += symbol
                 self.display.set(self.expression)
             else:
+                # solve the equation first, in case it's not one number
                 self.solve()
 
+                # inverse sign
                 if symbol == "±":
                     self.expression += "*-1"
+                # square number and check for overflow
                 elif symbol == "x²":
                     try:
                         self.expression = str(round(pow(float(self.expression), 2), 7))
                     except OverflowError:
                         self.display.set("error")
                         self.expression = ""
+                # square root number and check in case of negative numbers
                 elif symbol == "√":
                     try:
                         self.expression = str(round(math.sqrt(float(self.expression)), 7))
                     except ValueError:
                         self.display.set("error")
                         self.expression = ""
+                # decimal percentage
                 elif symbol == "%":
                     self.expression += "/100"
+                # log base 10 of number and check in case of negative numbers
                 elif symbol == "log":
                     try:
                         self.expression = str(round(math.log10(float(self.expression)), 7))
                     except ValueError:
                         self.display.set("error")
                         self.expression = ""
+                # 1 divided by the current number
                 elif symbol == "1/x":
                     self.expression = f"1/{self.expression}"
+                # factorial of number
                 elif symbol == "x!":
                     self.expression = str(math.factorial(float(self.expression)))
 
@@ -196,6 +212,7 @@ class Calculator:
 
     def solve(self):
 
+        # evaluate the string expression as python and display answer
         try:
             self.display.set(str(round(eval(self.expression), 7)))
             self.expression = self.display.get()
@@ -206,6 +223,7 @@ class Calculator:
 
     def clear(self):
 
+        # clears equation and display
         self.expression = ""
         self.display.set("0")
 
@@ -213,7 +231,5 @@ class Calculator:
 # -- Main Driver Code --
 
 gui = tkinter.Tk()
-
 calculator = Calculator(gui)
-
 gui.mainloop()
