@@ -2,7 +2,7 @@ import tkinter
 import math
 
 
-class Calculator():
+class Calculator:
     expression = ""
     is_solved = True
 
@@ -120,54 +120,40 @@ class Calculator():
 
         factorial_button = tkinter.Button(window, text="x!", height=3, width=6,
                                           activebackground="#aaaba8", bg="#c1c0b9", fg="#222222",
-                                          command=lambda: self.function_pressed("!"))
+                                          command=lambda: self.function_pressed("x!"))
         factorial_button.grid(row=2, column=1)
 
         fraction_button = tkinter.Button(window, text="⅟ x", height=3, width=6,
-                                         activebackground="#aaaba8",
-                                         bg="#c1c0b9", fg="#222222",
+                                         activebackground="#aaaba8", bg="#c1c0b9", fg="#222222",
                                          command=lambda: self.function_pressed("1/x"))
         fraction_button.grid(row=2, column=2)
 
     def number_pressed(self, number):
-
-        # if number == ".":
-        #     pos_expression =
-        #
-        #     if self.expression.isdigit():
-        #         return
-        #     elif self.is_solved:
-        #         self.expression = "0."
-        #         self.is_solved = False
-        #     else:
-        #         if not self.expression[-1].isdigit():
-        #             number = "0."
-        #         self.expression += number
-        # else:
-        #     if self.is_solved:
-        #         self.expression = number
-        #         self.is_solved = False
-        #     else:
-        #         self.expression += number
 
         if self.is_solved:
             if number == ".":
                 number = "0."
 
             self.expression = number
+            self.display.set(self.expression)
             self.is_solved = False
         else:
             if number == ".":
-                is_int = math.floor(float(self.expression)) == int(self.expression)
-
-                if not is_int:
-                    return
-                elif not self.expression[-1].isdigit():
+                if not self.expression[-1].isdigit():
                     number = "0."
+                else:
+                    number_list = self.expression.replace("+", " ").replace("-", " ").replace("/", " ") \
+                        .replace("*", " ").split()
+
+                    current_number = number_list[-1]
+
+                    is_int = math.floor(float(current_number)) == int(current_number)
+
+                    if not is_int:
+                        return
 
             self.expression += number
-
-        self.display.set(self.expression)
+            self.display.set(self.expression)
 
     def function_pressed(self, symbol):
 
@@ -189,17 +175,22 @@ class Calculator():
                     self.expression = str(round(math.sqrt(abs(float(self.expression))), 7))
                 elif symbol == "%":
                     self.expression += "/100"
+                elif symbol == "log":
+                    pass
+                elif symbol == "1/x":
+                    pass
+                elif symbol == "x!":
+                    pass
 
                 self.solve()
 
     def solve(self):
 
         try:
-            self.display.set(str(eval(self.expression)))
+            self.display.set(str(round(eval(self.expression), 7)))
             self.expression = self.display.get()
             self.is_solved = True
-        except (SyntaxError, ZeroDivisionError, ValueError, OverflowError) as e:
-            print("ERROR: ", e)
+        except (SyntaxError, ZeroDivisionError, ValueError, OverflowError):
             self.display.set("error")
             self.expression = ""
 
@@ -213,6 +204,6 @@ class Calculator():
 
 gui = tkinter.Tk()
 
-Calculator(gui)
+calculator = Calculator(gui)
 
 gui.mainloop()
