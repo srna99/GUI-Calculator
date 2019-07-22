@@ -3,10 +3,13 @@ import math
 
 
 class Calculator:
+    """A class for creation of a calculator and performing calculations."""
+
     expression = ""  # equation to be solved
     is_solved = True  # if current equation is finished with
 
     def __init__(self, window: tkinter.Tk):
+        """Create and add features to the GUI."""
 
         window.title("Calculator")
         window.geometry("275x440")
@@ -130,6 +133,11 @@ class Calculator:
         fraction_button.grid(row=2, column=2)
 
     def number_pressed(self, number):
+        """
+        Add and format numbers and decimal to expression and display.
+
+        :param number: The label of the button pressed.
+        """
 
         # clear expression and start new one
         if self.is_solved:
@@ -162,6 +170,11 @@ class Calculator:
             self.display.set(self.expression)
 
     def function_pressed(self, symbol):
+        """
+        Add mathematical functions and operations to the expression.
+
+        :param symbol: The function or operator's label.
+        """
 
         if self.expression != "":
             self.is_solved = False
@@ -211,8 +224,8 @@ class Calculator:
                 self.solve()
 
     def solve(self):
+        """Evaluate the string expression as Python code and display answer."""
 
-        # evaluate the string expression as python and display answer
         try:
             self.display.set(str(round(eval(self.expression), 7)))
             self.expression = self.display.get()
@@ -222,8 +235,8 @@ class Calculator:
             self.expression = ""
 
     def clear(self):
+        """Clear expression and display."""
 
-        # clears equation and display
         self.expression = ""
         self.display.set("0")
 
