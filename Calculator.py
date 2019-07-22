@@ -163,6 +163,8 @@ class Calculator:
                 self.expression += symbol
                 self.display.set(self.expression)
             else:
+                self.solve()
+
                 if symbol == "±":
                     self.expression += "*-1"
                 elif symbol == "x²":
@@ -172,15 +174,23 @@ class Calculator:
                         self.display.set("error")
                         self.expression = ""
                 elif symbol == "√":
-                    self.expression = str(round(math.sqrt(abs(float(self.expression))), 7))
+                    try:
+                        self.expression = str(round(math.sqrt(float(self.expression)), 7))
+                    except ValueError:
+                        self.display.set("error")
+                        self.expression = ""
                 elif symbol == "%":
                     self.expression += "/100"
                 elif symbol == "log":
-                    pass
+                    try:
+                        self.expression = str(round(math.log10(float(self.expression)), 7))
+                    except ValueError:
+                        self.display.set("error")
+                        self.expression = ""
                 elif symbol == "1/x":
-                    pass
+                    self.expression = f"1/{self.expression}"
                 elif symbol == "x!":
-                    pass
+                    self.expression = str(math.factorial(float(self.expression)))
 
                 self.solve()
 
