@@ -219,7 +219,11 @@ class Calculator:
                     self.expression = f"1/{self.expression}"
                 # factorial of number
                 elif symbol == "x!":
-                    self.expression = str(math.factorial(float(self.expression)))
+                    try:
+                        self.expression = str(math.factorial(float(self.expression)))
+                    except ValueError:
+                        self.display.set("error")
+                        self.expression = ""
 
                 self.solve()
 
